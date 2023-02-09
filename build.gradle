@@ -1,0 +1,15 @@
+plugins {
+    id "java"
+    id "io.freefair.lombok" version "6.6.1"
+}
+
+group "lol.pyr"
+version "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "io.netty:netty-buffer:4.1.87.Final"
+}
