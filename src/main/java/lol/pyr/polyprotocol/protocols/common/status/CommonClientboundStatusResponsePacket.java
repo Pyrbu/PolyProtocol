@@ -4,11 +4,20 @@ import lol.pyr.polyprotocol.PacketBuffer;
 import lol.pyr.polyprotocol.ProtocolState;
 import lol.pyr.polyprotocol.ProtocolVersion;
 import lol.pyr.polyprotocol.api.Packet;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-public class ClientboundStatusResponsePacket implements Packet {
-    private final String json;
+public class CommonClientboundStatusResponsePacket implements Packet {
+    private final ProtocolVersion protocolVersion;
+    @Getter private final String json;
+
+    public CommonClientboundStatusResponsePacket(ProtocolVersion protocolVersion, String json) {
+        this.protocolVersion = protocolVersion;
+        this.json = json;
+    }
+
+    public CommonClientboundStatusResponsePacket(ProtocolVersion protocolVersion, PacketBuffer buffer) {
+        this(protocolVersion, buffer.readString());
+    }
 
     @Override
     public ProtocolState getProtocolState() {
@@ -17,16 +26,12 @@ public class ClientboundStatusResponsePacket implements Packet {
 
     @Override
     public ProtocolVersion getProtocolVersion() {
-        return ProtocolVersion.R1_19_3;
+        return protocolVersion;
     }
 
     @Override
     public int getId() {
         return 0x00;
-    }
-
-    public static ClientboundStatusResponsePacket readFrom(PacketBuffer buffer) {
-        return new ClientboundStatusResponsePacket(buffer.readString());
     }
 
     @Override
