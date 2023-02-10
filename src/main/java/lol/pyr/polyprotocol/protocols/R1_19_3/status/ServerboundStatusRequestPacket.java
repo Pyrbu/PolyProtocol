@@ -4,7 +4,9 @@ import lol.pyr.polyprotocol.PacketBuffer;
 import lol.pyr.polyprotocol.ProtocolState;
 import lol.pyr.polyprotocol.ProtocolVersion;
 import lol.pyr.polyprotocol.api.Packet;
+import lombok.Data;
 
+@Data
 public class ServerboundStatusRequestPacket implements Packet {
     @Override
     public ProtocolState getProtocolState() {
@@ -21,7 +23,7 @@ public class ServerboundStatusRequestPacket implements Packet {
         return 0x00;
     }
 
-    public static ServerboundStatusRequestPacket readFrom(PacketBuffer buffer) {
+    public static ServerboundStatusRequestPacket readFrom(PacketBuffer ignoredBuffer) {
         return new ServerboundStatusRequestPacket();
     }
 

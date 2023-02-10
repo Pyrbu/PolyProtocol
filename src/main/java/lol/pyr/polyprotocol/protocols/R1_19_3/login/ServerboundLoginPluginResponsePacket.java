@@ -6,12 +6,10 @@ import lol.pyr.polyprotocol.ProtocolVersion;
 import lol.pyr.polyprotocol.api.Packet;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
-public class ServerboundLoginStartPacket implements Packet {
-    private final String username;
-    private final UUID uuid;
+public class ServerboundLoginPluginResponsePacket implements Packet {
+    private final int messageId;
+    private final byte[] data;
 
     @Override
     public ProtocolState getProtocolState() {
@@ -25,25 +23,25 @@ public class ServerboundLoginStartPacket implements Packet {
 
     @Override
     public int getId() {
-        return 0x00;
+        return 0x02;
     }
 
-    public boolean hasUuid() {
-        return uuid != null;
+    public boolean hasData() {
+        return data != null;
     }
 
-    public static ServerboundLoginStartPacket readFrom(PacketBuffer buffer) {
-        return new ServerboundLoginStartPacket(
-                buffer.readString(),
-                buffer.readBoolean() ? buffer.readUUID() : null
+    public static ServerboundLoginPluginResponsePacket readFrom(PacketBuffer buffer) {
+        return new ServerboundLoginPluginResponsePacket(
+                buffer.readVarInt(),
+                buffer.readBoolean() ? buffer.readBytes(buffer.size()) : null
         );
     }
 
     @Override
     public PacketBuffer writeTo(PacketBuffer buffer) {
-        buffer.writeString(username);
-        buffer.writeBoolean(hasUuid());
-        if (hasUuid()) buffer.writeUUID(uuid);
+        buffer.writeVarInt(messageId);
+        buffer.writeBoolean(hasData());
+        if (hasData()) buffer.writeBytes(data);
         return buffer;
     }
 }
