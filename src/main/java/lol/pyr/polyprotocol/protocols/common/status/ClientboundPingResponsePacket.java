@@ -1,4 +1,4 @@
-package lol.pyr.polyprotocol.protocols.R1_19_3.status;
+package lol.pyr.polyprotocol.protocols.common.status;
 
 import lol.pyr.polyprotocol.PacketBuffer;
 import lol.pyr.polyprotocol.ProtocolState;
@@ -7,7 +7,7 @@ import lol.pyr.polyprotocol.api.Packet;
 import lombok.Data;
 
 @Data
-public class ServerboundPingRequestPacket implements Packet {
+public class ClientboundPingResponsePacket implements Packet {
     private final long payload;
 
     @Override
@@ -25,8 +25,8 @@ public class ServerboundPingRequestPacket implements Packet {
         return 0x01;
     }
 
-    public static ServerboundPingRequestPacket readFrom(PacketBuffer buffer) {
-        return new ServerboundPingRequestPacket(buffer.readLong());
+    public static ClientboundPingResponsePacket readFrom(PacketBuffer buffer) {
+        return new ClientboundPingResponsePacket(buffer.readLong());
     }
 
     @Override

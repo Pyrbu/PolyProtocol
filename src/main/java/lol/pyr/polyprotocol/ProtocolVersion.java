@@ -8,6 +8,7 @@ public enum ProtocolVersion {
     R1_7_6(5),
 
     R1_8(47),
+
     R1_9(107),
     R1_9_1(108),
     R1_9_2(109),
