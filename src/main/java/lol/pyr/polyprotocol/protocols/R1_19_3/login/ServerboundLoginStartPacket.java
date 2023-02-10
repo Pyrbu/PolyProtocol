@@ -6,13 +6,12 @@ import lol.pyr.polyprotocol.ProtocolVersion;
 import lol.pyr.polyprotocol.api.Packet;
 import lombok.Data;
 
-import java.security.PublicKey;
+import java.util.UUID;
 
 @Data
-public class ClientboundEncryptionRequestPacket implements Packet {
-    private final String serverId;
-    private final PublicKey publicKey;
-    private final byte[] verifyToken;
+public class ServerboundLoginStartPacket implements Packet {
+    private final String username;
+    private final UUID uuid;
 
     @Override
     public ProtocolState getProtocolState() {
@@ -26,22 +25,24 @@ public class ClientboundEncryptionRequestPacket implements Packet {
 
     @Override
     public int getId() {
-        return 0x01;
+        return 0x00;
     }
 
-    public static ClientboundEncryptionRequestPacket readFrom(PacketBuffer buffer) {
-        return new ClientboundEncryptionRequestPacket(
+    public boolean hasUuid() {
+        return uuid != null;
+    }
+
+    public static ServerboundLoginStartPacket readFrom(PacketBuffer buffer) {
+        return new ServerboundLoginStartPacket(
                 buffer.readString(),
-                buffer.readPublicKey(),
-                buffer.readByteArray()
+                buffer.readBoolean() ? buffer.readUUID() : null
         );
     }
 
     @Override
     public PacketBuffer writeTo(PacketBuffer buffer) {
-        buffer.writeString(serverId);
-        buffer.writePublicKey(publicKey);
-        buffer.writeByteArray(verifyToken);
+        buffer.writeString(username);
+        buffer.writeBoolean(hasUuid());
         return buffer;
     }
 }

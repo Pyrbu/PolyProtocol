@@ -25,12 +25,12 @@ public class ClientboundPingResponsePacket implements Packet {
         return 0x01;
     }
 
-    public static ClientboundPingResponsePacket fromBuffer(PacketBuffer buffer) {
+    public static ClientboundPingResponsePacket readFrom(PacketBuffer buffer) {
         return new ClientboundPingResponsePacket(buffer.readLong());
     }
 
     @Override
-    public PacketBuffer toBuffer() {
-        return new PacketBuffer().writeLong(payload);
+    public PacketBuffer writeTo(PacketBuffer buffer) {
+        return buffer.writeLong(payload);
     }
 }

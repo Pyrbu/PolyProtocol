@@ -1,4 +1,4 @@
-package lol.pyr.polyprotocol.protocols.R1_19_3.status;
+package lol.pyr.polyprotocol.protocols.R1_19_3.login;
 
 import lol.pyr.polyprotocol.PacketBuffer;
 import lol.pyr.polyprotocol.ProtocolState;
@@ -7,12 +7,12 @@ import lol.pyr.polyprotocol.api.Packet;
 import lombok.Data;
 
 @Data
-public class ServerboundPingRequestPacket implements Packet {
-    private final long payload;
+public class ClientboundSetCompressionPacket implements Packet {
+    private final int threshold;
 
     @Override
     public ProtocolState getProtocolState() {
-        return ProtocolState.STATUS;
+        return ProtocolState.LOGIN;
     }
 
     @Override
@@ -22,15 +22,15 @@ public class ServerboundPingRequestPacket implements Packet {
 
     @Override
     public int getId() {
-        return 0x01;
+        return 0x03;
     }
 
-    public static ServerboundPingRequestPacket readFrom(PacketBuffer buffer) {
-        return new ServerboundPingRequestPacket(buffer.readLong());
+    public ClientboundSetCompressionPacket readFrom(PacketBuffer buffer) {
+        return new ClientboundSetCompressionPacket(buffer.readVarInt());
     }
 
     @Override
     public PacketBuffer writeTo(PacketBuffer buffer) {
-        return buffer.writeLong(payload);
+        return buffer.writeVarInt(threshold);
     }
 }

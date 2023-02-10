@@ -8,5 +8,5 @@ public interface Packet {
     ProtocolState getProtocolState();
     ProtocolVersion getProtocolVersion();
     int getId();
-    PacketBuffer toBuffer();
+    PacketBuffer writeTo(PacketBuffer buffer);
 }

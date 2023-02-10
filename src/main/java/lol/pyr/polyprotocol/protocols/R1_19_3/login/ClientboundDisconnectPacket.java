@@ -25,12 +25,12 @@ public class ClientboundDisconnectPacket implements Packet {
         return 0x00;
     }
 
-    public static ClientboundDisconnectPacket fromBuffer(PacketBuffer buffer) {
+    public static ClientboundDisconnectPacket readFrom(PacketBuffer buffer) {
         return new ClientboundDisconnectPacket(buffer.readString());
     }
 
     @Override
-    public PacketBuffer toBuffer() {
-        return new PacketBuffer().writeString(reason);
+    public PacketBuffer writeTo(PacketBuffer buffer) {
+        return buffer.writeString(reason);
     }
 }

@@ -25,12 +25,12 @@ public class ClientboundStatusResponsePacket implements Packet {
         return 0x00;
     }
 
-    public static ClientboundStatusResponsePacket fromBuffer(PacketBuffer buffer) {
+    public static ClientboundStatusResponsePacket readFrom(PacketBuffer buffer) {
         return new ClientboundStatusResponsePacket(buffer.readString());
     }
 
     @Override
-    public PacketBuffer toBuffer() {
-        return new PacketBuffer().writeString(json);
+    public PacketBuffer writeTo(PacketBuffer buffer) {
+        return buffer.writeString(json);
     }
 }

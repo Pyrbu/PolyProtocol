@@ -27,8 +27,8 @@ public class ServerboundHandshakePacket implements Packet {
         return 0x00;
     }
 
-    public ServerboundHandshakePacket fromBuffer(PacketBuffer buffer) {
-        buffer.readInt();
+    public ServerboundHandshakePacket readFrom(PacketBuffer buffer) {
+        if (buffer.readInt() != getProtocolVersion().getProtocolNumber()) throw new RuntimeException("Wrong protocol version used!");
         return new ServerboundHandshakePacket(
                 buffer.readString(),
                 buffer.readUnsignedShort(),
@@ -37,11 +37,11 @@ public class ServerboundHandshakePacket implements Packet {
     }
 
     @Override
-    public PacketBuffer toBuffer() {
-        return new PacketBuffer()
-                .writeVarInt(getProtocolVersion().getProtocolNumber())
-                .writeString(serverAddress)
-                .writeShort(serverPort)
-                .writeInt(nextState.ordinal());
+    public PacketBuffer writeTo(PacketBuffer buffer) {
+        buffer.writeVarInt(getProtocolVersion().getProtocolNumber());
+        buffer.writeString(serverAddress);
+        buffer.writeShort(serverPort);
+        buffer.writeInt(nextState.ordinal());
+        return buffer;
     }
 }

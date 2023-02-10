@@ -21,12 +21,12 @@ public class ServerboundStatusRequestPacket implements Packet {
         return 0x00;
     }
 
-    public static ServerboundStatusRequestPacket fromBuffer(PacketBuffer buffer) {
+    public static ServerboundStatusRequestPacket readFrom(PacketBuffer buffer) {
         return new ServerboundStatusRequestPacket();
     }
 
     @Override
-    public PacketBuffer toBuffer() {
-        return new PacketBuffer();
+    public PacketBuffer writeTo(PacketBuffer buffer) {
+        return buffer;
     }
 }

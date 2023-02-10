@@ -29,7 +29,7 @@ public class ClientboundLoginSuccessPacket implements Packet {
         return 0x02;
     }
 
-    public static ClientboundLoginSuccessPacket fromBuffer(PacketBuffer buffer) {
+    public static ClientboundLoginSuccessPacket readFrom(PacketBuffer buffer) {
         UUID uuid = buffer.readUUID();
         String username = buffer.readString();
         int propertyAmount = buffer.readVarInt();
@@ -39,8 +39,7 @@ public class ClientboundLoginSuccessPacket implements Packet {
     }
 
     @Override
-    public PacketBuffer toBuffer() {
-        PacketBuffer buffer = new PacketBuffer();
+    public PacketBuffer writeTo(PacketBuffer buffer) {
         buffer.writeUUID(uuid);
         buffer.writeString(username);
         buffer.writeVarInt(properties.length);
