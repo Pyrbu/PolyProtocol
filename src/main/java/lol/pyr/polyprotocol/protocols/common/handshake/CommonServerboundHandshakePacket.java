@@ -1,11 +1,14 @@
 package lol.pyr.polyprotocol.protocols.common.handshake;
 
-import lol.pyr.polyprotocol.PacketBuffer;
-import lol.pyr.polyprotocol.ProtocolState;
-import lol.pyr.polyprotocol.ProtocolVersion;
+import lol.pyr.polyprotocol.data.PacketBuffer;
+import lol.pyr.polyprotocol.states.ProtocolState;
+import lol.pyr.polyprotocol.protocols.ProtocolVersion;
 import lol.pyr.polyprotocol.api.Packet;
 import lombok.Getter;
 
+/**
+ * Packet is fully common across all versions
+ */
 public class CommonServerboundHandshakePacket implements Packet {
     private final ProtocolVersion protocolVersion;
 

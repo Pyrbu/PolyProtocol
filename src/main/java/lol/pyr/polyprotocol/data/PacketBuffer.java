@@ -1,4 +1,4 @@
-package lol.pyr.polyprotocol;
+package lol.pyr.polyprotocol.data;
 
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
@@ -67,6 +67,16 @@ public class PacketBuffer {
         return readBytes(readVarInt());
     }
 
+    public PacketBuffer writeShortLengthByteArray(byte[] bytes) {
+        writeShort(bytes.length);
+        writeBytes(bytes);
+        return this;
+    }
+
+    public byte[] readShortLengthByteArray() {
+        return readBytes(readShort());
+    }
+
     public PacketBuffer writePublicKey(PublicKey key) {
         writeByteArray(key.getEncoded());
         return this;
@@ -75,6 +85,21 @@ public class PacketBuffer {
     public PublicKey readPublicKey() {
         try {
             X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(readByteArray());
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            return keyFactory.generatePublic(encodedKeySpec);
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public PacketBuffer writeShortLengthPublicKey(PublicKey key) {
+        writeShortLengthByteArray(key.getEncoded());
+        return this;
+    }
+
+    public PublicKey readShortLengthPublicKey() {
+        try {
+            X509EncodedKeySpec encodedKeySpec = new X509EncodedKeySpec(readShortLengthByteArray());
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             return keyFactory.generatePublic(encodedKeySpec);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
