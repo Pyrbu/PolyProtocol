@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 public class CommonClientboundPingResponsePacket implements Packet {
     private final ProtocolVersion protocolVersion;
-    @Getter private final long payload;
+    @Getter protected final long payload;
 
     public CommonClientboundPingResponsePacket(ProtocolVersion protocolVersion, long payload) {
         this.protocolVersion = protocolVersion;

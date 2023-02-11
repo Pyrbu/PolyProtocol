@@ -13,9 +13,9 @@ import java.security.PublicKey;
  */
 public class CommonClientboundEncryptionRequestPacket implements Packet {
     private final ProtocolVersion protocolVersion;
-    @Getter private final String serverId;
-    @Getter private final PublicKey publicKey;
-    @Getter private final byte[] verifyToken;
+    @Getter protected final String serverId;
+    @Getter protected final PublicKey publicKey;
+    @Getter protected final byte[] verifyToken;
 
     public CommonClientboundEncryptionRequestPacket(ProtocolVersion protocolVersion, String serverId, PublicKey publicKey, byte[] verifyToken) {
         this.protocolVersion = protocolVersion;
@@ -25,7 +25,7 @@ public class CommonClientboundEncryptionRequestPacket implements Packet {
     }
 
     public CommonClientboundEncryptionRequestPacket(ProtocolVersion protocolVersion, PacketBuffer buffer) {
-        this(protocolVersion, buffer.readString(), buffer.readPublicKey(), buffer.readByteArray());
+        this(protocolVersion, buffer.readString(), buffer.readShortLengthPublicKey(), buffer.readShortLengthByteArray());
     }
 
     @Override
@@ -46,8 +46,8 @@ public class CommonClientboundEncryptionRequestPacket implements Packet {
     @Override
     public PacketBuffer writeTo(PacketBuffer buffer) {
         buffer.writeString(serverId);
-        buffer.writePublicKey(publicKey);
-        buffer.writeByteArray(verifyToken);
+        buffer.writeShortLengthPublicKey(publicKey);
+        buffer.writeShortLengthByteArray(verifyToken);
         return buffer;
     }
 }

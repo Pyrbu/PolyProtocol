@@ -12,9 +12,9 @@ import lombok.Getter;
 public class CommonServerboundHandshakePacket implements Packet {
     private final ProtocolVersion protocolVersion;
 
-    @Getter private final String serverAddress;
-    @Getter private final int serverPort;
-    @Getter private final ProtocolState nextState;
+    @Getter protected final String serverAddress;
+    @Getter protected final int serverPort;
+    @Getter protected final ProtocolState nextState;
 
     public CommonServerboundHandshakePacket(ProtocolVersion protocolVersion, String serverAddress, int serverPort, ProtocolState nextState) {
         this.protocolVersion = protocolVersion;

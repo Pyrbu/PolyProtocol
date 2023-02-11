@@ -14,8 +14,8 @@ import java.util.UUID;
  */
 public class CommonClientboundLoginSuccessPacket implements Packet {
     private final ProtocolVersion protocolVersion;
-    @Getter private final UUID uuid;
-    @Getter private final String username;
+    @Getter protected final UUID uuid;
+    @Getter protected final String username;
 
 
     public CommonClientboundLoginSuccessPacket(ProtocolVersion protocolVersion, UUID uuid,  String username) {

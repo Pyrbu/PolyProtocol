@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 public class CommonClientboundDisconnectPacket implements Packet {
     private final ProtocolVersion protocolVersion;
-    @Getter private final String reason;
+    @Getter protected final String reason;
 
     public CommonClientboundDisconnectPacket(ProtocolVersion protocolVersion, String reason) {
         this.protocolVersion = protocolVersion;

@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 public class CommonClientboundStatusResponsePacket implements Packet {
     private final ProtocolVersion protocolVersion;
-    @Getter private final String json;
+    @Getter protected final String json;
 
     public CommonClientboundStatusResponsePacket(ProtocolVersion protocolVersion, String json) {
         this.protocolVersion = protocolVersion;

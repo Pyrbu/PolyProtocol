@@ -14,4 +14,11 @@ public class R1_16ClientboundLoginSuccessPacket extends CommonClientboundLoginSu
     public R1_16ClientboundLoginSuccessPacket(ProtocolVersion protocolVersion, PacketBuffer buffer) {
         this(protocolVersion, buffer.readUUID(), buffer.readString());
     }
+
+    @Override
+    public PacketBuffer writeTo(PacketBuffer buffer) {
+        buffer.writeUUID(uuid);
+        buffer.writeString(username);
+        return buffer;
+    }
 }

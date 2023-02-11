@@ -1,12 +1,14 @@
 package lol.pyr.polyprotocol.api;
 
 import lol.pyr.polyprotocol.data.PacketBuffer;
-import lol.pyr.polyprotocol.states.PacketDirection;
-import lol.pyr.polyprotocol.states.ProtocolState;
 import lol.pyr.polyprotocol.protocols.ProtocolVersion;
 import lol.pyr.polyprotocol.protocols.common.handshake.CommonServerboundHandshakePacket;
-import lol.pyr.polyprotocol.protocols.common.login.CommonClientboundDisconnectPacket;
-import lol.pyr.polyprotocol.protocols.common.status.*;
+import lol.pyr.polyprotocol.protocols.common.status.CommonClientboundPingResponsePacket;
+import lol.pyr.polyprotocol.protocols.common.status.CommonClientboundStatusResponsePacket;
+import lol.pyr.polyprotocol.protocols.common.status.CommonServerboundPingRequestPacket;
+import lol.pyr.polyprotocol.protocols.common.status.CommonServerboundStatusRequestPacket;
+import lol.pyr.polyprotocol.states.PacketDirection;
+import lol.pyr.polyprotocol.states.ProtocolState;
 
 import java.util.function.Function;
 
@@ -15,13 +17,10 @@ public abstract class ProtocolRouter {
     private final ProtocolSubRouter clientboundRouter;
 
     public ProtocolRouter(ProtocolVersion protocolVersion) {
-        // Registerring all fully common packets
+        // Register all STATUS packets since they're the same on all versions
         this.clientboundRouter = new ProtocolSubRouter();
         this.clientboundRouter.registerDecoder(ProtocolState.STATUS, 0x00, buffer -> new CommonClientboundStatusResponsePacket(protocolVersion, buffer));
         this.clientboundRouter.registerDecoder(ProtocolState.STATUS, 0x01, buffer -> new CommonClientboundPingResponsePacket(protocolVersion, buffer));
-
-        this.clientboundRouter.registerDecoder(ProtocolState.LOGIN, 0x00, buffer -> new CommonClientboundDisconnectPacket(protocolVersion, buffer));
-        // 0x01 ClientboundEncryptionRequestPacket
 
         this.serverboundRouter = new ProtocolSubRouter(buffer -> new CommonServerboundHandshakePacket(protocolVersion, buffer));
         this.serverboundRouter.registerDecoder(ProtocolState.STATUS, 0x00, buffer -> new CommonServerboundStatusRequestPacket(protocolVersion));
